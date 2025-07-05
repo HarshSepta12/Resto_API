@@ -21,10 +21,12 @@ export const RegisterUser = async (req, res) => {
     } else {
       const hashpassword = await bcrypt.hash(password, 10);
       const newUser = await User.create({
-        username,
-        email,
-        password: hashpassword,
-      });
+  username,
+  email,
+  password: hashpassword,
+  role: role || "user", 
+});
+
       return res.json({
         message: "user created successfull",
         newUser,
@@ -78,7 +80,6 @@ export const LoginUser = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
-
       { expiresIn: "1h" }
     );
 
@@ -90,6 +91,7 @@ export const LoginUser = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        role: user.role
       },
     });
   } catch (error) {

@@ -5,7 +5,8 @@ import UserRoute  from "./routes/UserRoute.js";
 import AdminRoutes from './routes/adminRoutes.js';
 import CategoryRoutes from './routes/Category.js';
 import MenuItemRoutes from './routes/MenuItem.js';
-import cors from "cors"
+import cors from "cors";
+import AddtocartRoutes from "./routes/AddToCart.js"
 
 const app = express();
 app.use(express.json());
@@ -22,3 +23,4 @@ app.use("/api/user", UserRoute);
 app.use("/api/admin", AdminRoutes);
 app.use("/api/category", CategoryRoutes);
 app.use("/api/menuItem", MenuItemRoutes);
+app.use("/api/Addtocart", AddtocartRoutes);

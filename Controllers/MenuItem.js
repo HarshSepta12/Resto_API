@@ -44,10 +44,14 @@ export const createMenuItem = async (req, res) => {
 
 export const getAllMenuItem = async(req, res) => {
   try {
-    const getAllMenuItem = await MenuItem.find();
+    const getAllMenuItem = await MenuItem.find().populate("category"); 
     if(!getAllMenuItem) return res.json({message: "Not Found MenuItem", success:false})
       res.json({message: "Your All Menu Item is Here...", getAllMenuItem, success:true});
   } catch (error) {
-    
+    res.status(404).json({
+      message: "Failed to create menu item",
+      error: error.message,
+      success: false,
+    });
   }
-}
+  }
