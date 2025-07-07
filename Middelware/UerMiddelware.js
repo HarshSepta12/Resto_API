@@ -1,6 +1,9 @@
+// middleware/authenticateToken.js
+import jwt from "jsonwebtoken";
+
 export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  // console.log("🛡️ Token Header: ", authHeader); // 🧪 यह बताएगा token आ रहा है या नहीं
+  console.log("🛡️ Token Header:", authHeader);
 
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
@@ -12,6 +15,7 @@ export const authenticateToken = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
+    console.error("❌ Invalid Token", err.message);
     return res.status(401).json({ message: "Invalid Token", success: false });
   }
 };
