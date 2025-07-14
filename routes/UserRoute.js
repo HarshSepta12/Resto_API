@@ -14,9 +14,9 @@ import { isAdminUser } from "../Middelware/AdminMiddleware.js";
 const router = express.Router();
 
 router.post("/useradd", RegisterUser);
-router.post("/login", LoginUser); 
+router.post("/login", LoginUser);
 
-router.get("/getAllUser",  getAllUser);
+router.get("/getAllUser", authenticateToken, isAdminUser, getAllUser);
 router.get("/dashboard", authenticateToken, getMyProfile);
 
 router.put("/updateUser/:id", authenticateToken, UpdateUser);

@@ -67,3 +67,28 @@ export const getAllMenuItem = async(req, res) => {
         res.json({ message: error.message, success: false });
     }
   }
+
+  export const editMenuItem = async(req, res) => {
+    const id = req.params.id;
+     const {
+      name,
+      description,
+      price,
+      imageUrl,
+      isAvailable,
+      spiceLevel,
+      ingredients,
+      category
+    } = req.body;
+    const updatedData = {name,
+    description, price, imageUrl, isAvailable, spiceLevel, ingredients, category
+    };
+    try {
+      const getItemForEdit = await MenuItem.findByIdAndUpdate(id, updatedData, {new:true});
+      
+      if(!getItemForEdit) return res.json({  message: "No data found for update", success:false})
+        res.json({message: "Record Update Successfull...", success:true})
+    } catch (error) {
+       res.json({ message: error.message, success: false });
+    }
+  }
