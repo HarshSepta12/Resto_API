@@ -55,3 +55,15 @@ export const getAllMenuItem = async(req, res) => {
     });
   }
   }
+
+
+  export const deleteMenuItem = async(req, res) => {
+    try {
+      const id = req.params.id;
+      const getItem = await MenuItem.findByIdAndDelete(id);
+      if(!getItem) return res.json({message: "NO Item Found For Delete", success:false});
+         res.json({message: "Delete Succesfull", success: true});
+    } catch (error) {
+        res.json({ message: error.message, success: false });
+    }
+  }
