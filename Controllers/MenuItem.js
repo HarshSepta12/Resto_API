@@ -56,6 +56,19 @@ export const getAllMenuItem = async(req, res) => {
   }
   }
 
+export const getMenuById = async(req, res) => {
+  const  id = req.params.id;
+  try {
+     const product = await MenuItem.findById(id);
+  console.log(product);
+  if(!product) return res.json({message: "Product is not Available", success:false});
+  res.json({message: "Yoru Product is here...",product, success:true})
+    
+  } catch (error) {
+      res.json({ message: error.message, success: false });
+  }
+ 
+}
 
   export const deleteMenuItem = async(req, res) => {
     try {
