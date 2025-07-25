@@ -1,13 +1,15 @@
-import mongoose, { model } from "mongoose"
+import mongoose from "mongoose";
 
 const tableBook = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
-    time: { type: String, required: true }, // alternatively: Date
-    guests: { type: Number, required: true }, // ye select box se aayega
-    specialRequest: { type: String }, // optional textarea
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true } // ref field
+    phone: { type: String, required: true }, // Added phone field
+    time: { type: String, required: true },
+    guests: { type: Number, required: true },
+    specialRequest: { type: String },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    status: { type: String, default: "pending" }, // pending, confirmed, cancelled
+    createdAt: { type: Date, default: Date.now }
 });
 
-    
-    export const TableBook =  mongoose.model("TableBook",tableBook )
+export const TableBook = mongoose.model("TableBook", tableBook);
