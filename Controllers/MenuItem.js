@@ -55,3 +55,53 @@ export const getAllMenuItem = async(req, res) => {
     });
   }
   }
+
+export const getMenuById = async(req, res) => {
+  const  id = req.params.id;
+  try {
+     const product = await MenuItem.findById(id);
+  console.log(product);
+  if(!product) return res.json({message: "Product is not Available", success:false});
+  res.json({message: "Yoru Product is here...",product, success:true})
+    
+  } catch (error) {
+      res.json({ message: error.message, success: false });
+  }
+ 
+}
+
+  export const deleteMenuItem = async(req, res) => {
+    try {
+      const id = req.params.id;
+      const getItem = await MenuItem.findByIdAndDelete(id);
+      if(!getItem) return res.json({message: "NO Item Found For Delete", success:false});
+         res.json({message: "Delete Succesfull", success: true});
+    } catch (error) {
+        res.json({ message: error.message, success: false });
+    }
+  }
+
+  export const editMenuItem = async(req, res) => {
+    const id = req.params.id;
+     const {
+      name,
+      description,
+      price,
+      imageUrl,
+      isAvailable,
+      spiceLevel,
+      ingredients,
+      category
+    } = req.body;
+    const updatedData = {name,
+    description, price, imageUrl, isAvailable, spiceLevel, ingredients, category
+    };
+    try {
+      const getItemForEdit = await MenuItem.findByIdAndUpdate(id, updatedData, {new:true});
+      
+      if(!getItemForEdit) return res.json({  message: "No data found for update", success:false})
+        res.json({message: "Record Update Successfull...", success:true})
+    } catch (error) {
+       res.json({ message: error.message, success: false });
+    }
+  }

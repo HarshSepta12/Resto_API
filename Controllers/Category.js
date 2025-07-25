@@ -68,7 +68,7 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async(req, res) => {
      try {
-           const id = req.params.id;
+      const id = req.params.id;
      const getDeleteCategory = await Category.findByIdAndDelete(id);
      if(!getDeleteCategory) return res.json({message: "Not Found Data for Delete", success:false});
      res.json({message: "Delete Succesfull", success: true});
