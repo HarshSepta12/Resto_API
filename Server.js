@@ -6,14 +6,15 @@ import AdminRoutes from './routes/adminRoutes.js';
 import CategoryRoutes from './routes/Category.js';
 import MenuItemRoutes from './routes/MenuItem.js';
 import paymentRoutes from './routes/Payment.js';
-
-
 import cors from "cors";
 import AddtocartRoutes from "./routes/AddToCart.js"
 import Booktable from "./routes/TableBook.js"
 import dotenv from 'dotenv';
+import { startBookingStatusUpdater } from "./utils/bookingCron.js"
+
 const app = express();
 // This should come before using process.env
+
 
 
 dotenv.config();
@@ -26,6 +27,7 @@ dbConnect();
 app.listen(port, () => {
   console.log(`Server is running at port ${port}`);
 });
+startBookingStatusUpdater(); // Start cron job when server starts
 
 app.use("/api/user", UserRoute);
 app.use("/api/admin", AdminRoutes);

@@ -1,6 +1,8 @@
 import { TableBook } from "../Model/TableBook.js";
 import { sendEmail } from "../utils/SendEmail.js";
+import { User } from "../Model/userSchema.js";
 // import { sendSMS } from "../utils/SendSMS.js";
+import mongoose from "mongoose";
 
 export const bookTable = async (req, res) => {
   try {
@@ -111,7 +113,7 @@ export const bookTable = async (req, res) => {
       await sendSMS(formattedPhone, smsMessage);
       console.log("✅ SMS sent successfully to:", formattedPhone);
     } catch (smsErr) {
-      console.error("❌ SMS send failed:", smsErr.message);
+      //console.error("❌ SMS send failed:", smsErr.message);
       // Don't fail the booking if SMS fails
     }
 
@@ -134,6 +136,34 @@ export const bookTable = async (req, res) => {
     res.status(500).json({ 
       success: false, 
       message: "Something went wrong while booking the table" 
+    });
+  }
+};
+
+
+
+export const getMyBooking = async (req, res) => {
+  try {
+    const userId = req.user._id || req.user.id;
+
+    // console.log("User ID from token:", userId); 
+    const bookings = await TableBook.find({
+      user: new mongoose.Types.ObjectId(userId),
+    })
+      .populate("user", "username email")
+      .sort({ createdAt: -1 });
+
+    // console.log("Bookings found:", bookings.length); 
+
+    res.status(200).json({
+      success: true,
+      booking: bookings,
+    });
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch bookings",
     });
   }
 };
