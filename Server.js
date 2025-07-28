@@ -11,6 +11,7 @@ import AddtocartRoutes from "./routes/AddToCart.js"
 import Booktable from "./routes/TableBook.js"
 import dotenv from 'dotenv';
 import { startBookingStatusUpdater } from "./utils/bookingCron.js"
+import AddresRoutes from "./routes/Address.js"
 
 const app = express();
 // This should come before using process.env
@@ -36,3 +37,4 @@ app.use("/api/menuItem", MenuItemRoutes);
 app.use("/api/Addtocart", AddtocartRoutes);
 app.use("/api/booking", Booktable);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/address', AddresRoutes);
